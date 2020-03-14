@@ -1,45 +1,47 @@
-$( document ).ready(function() { 
+const $favoriteNotes = $(`.favorite-notes`);
+const $allNotes = $(`.all-notes`);
 
-    const $favoriteNotes = $(`.favorite-notes`);
-    const $allNotes = $(`.all-notes`);
+function myRender() {
+    $.get(`/api/notes`, function(data) {
+        $favoriteNotes.empty();
+        $allNotes.empty();
+        
+        data.forEach( (item)=> {
+            let favorite = item.favorite;
+            let starState;
 
-    function myRender() {
-        $.get(`/api/notes`, function(data) {
+            // checking to see what the star icon should be
 
-            data.forEach( (item)=> {
-                let favorite = item.favorite;
-                let starState;
+            if (favorite === true) {
+                starState = `star`;
+            }
+            else {
+                starState = `star_outline`;
+            }
 
-                // checking to see what the star icon should be
+            // setting the HTML to append
 
-                if (favorite === true) {
-                    starState = `star`;
-                }
-                else {
-                    starState = `star_outline`;
-                }
+            let lineItem = `<li><a href="#!" class="waves-effect"><i class="material-icons right favBtn">${starState}</i><i class="material-icons right deleteBtn">delete_forever</i>${item.title}</a></li>`;
 
-                // setting the HTML to append
+            // appending the HTML
 
-                let lineItem = `<li><a href="#!" class="waves-effect"><i class="material-icons right">${starState}</i><i class="material-icons right">delete_forever</i>${item.title}</a></li>`;
+            if (item.favorite === true) {
+                $favoriteNotes.append(
+                    lineItem
+                )               
+            }
 
-                // appending the HTML
+            else {
+                $allNotes.append(
+                    lineItem
+                );               
+            }
 
-                if (item.favorite === true) {
-                    $favoriteNotes.append(
-                        lineItem
-                    )               
-                }
-
-                else {
-                    $allNotes.append(
-                        lineItem
-                    );               
-                }
-
-            });
         });
-    };
+    });
+};
+
+$( document ).ready(function() { 
 
     myRender();
 

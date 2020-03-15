@@ -22,3 +22,9 @@ header, main, footer {
   background-color: red;
   padding: 15px 5px;
 }
+
+[contenteditable=true]:empty:before{
+  content: attr(data-placeholder);
+  pointer-events: none;
+  display: block; /* For Firefox */
+}

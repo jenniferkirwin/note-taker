@@ -1,12 +1,19 @@
 const $favoriteNotes = $(`.favorite-notes`);
 const $allNotes = $(`.all-notes`);
+const $noteTitle = $(`.note-title`);
+const $noteContent = $(`.note-content`);
+const $noteDiv = $(`.note-div`);
+
+// -------------------------------------------------------------------
+// Rendering the Side Navigation
+// -------------------------------------------------------------------
 
 function myRender() {
     $.get(`/api/notes`, function(data) {
         $favoriteNotes.empty();
         $allNotes.empty();
         
-        data.forEach( (item)=> {
+        data.forEach( (item, index)=> {
             let favorite = item.favorite;
             let starState;
 
@@ -21,7 +28,7 @@ function myRender() {
 
             // setting the HTML to append
 
-            let lineItem = `<li><a href="#!" class="waves-effect"><i class="material-icons right favBtn">${starState}</i><i class="material-icons right deleteBtn">delete_forever</i>${item.title}</a></li>`;
+            let lineItem = `<li><a href="#!" class="waves-effect menu-item" data-index="${index}"><i class="material-icons right favBtn">${starState}</i><i class="material-icons right deleteBtn">delete_forever</i>${item.title}</a></li>`;
 
             // appending the HTML
 
@@ -40,6 +47,34 @@ function myRender() {
         });
     });
 };
+
+// -------------------------------------------------------------------
+// Rendering the "Note" section of 
+// -------------------------------------------------------------------
+
+// displaying a note
+
+const displayNote = ({title, content}, myIndex) => {
+
+    $noteDiv.attr(`data-index`, myIndex);
+    $noteTitle.html(title);
+    $noteContent.html(content);
+
+}
+
+// displaying a note when page renders
+
+// function activeNote() {
+//     $.get(`/api/notes`, function(data) {    
+
+//         if (data.length > 0) {
+
+//             displayNote(data, 0);
+
+//         };
+
+//     });
+// }
 
 $( document ).ready(function() { 
 

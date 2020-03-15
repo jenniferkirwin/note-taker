@@ -54,11 +54,18 @@ $( document ).ready(function() {
 
     $(document).on(`click`, `.menu-item`, function() {
 
+        const $activeLi = $(this).parent();
         const activeIndex =  $(this).attr(`data-index`);
 
-        $.get(`/api/notes/${activeIndex}`, function(data) {    
+        $.get(`/api/notes/get/${activeIndex}`, function(data) {    
 
             displayNote(data, activeIndex);
+
+        })
+        .then( () => {
+
+            $(`.sidenav li`).removeClass(`active`);
+            $activeLi.addClass(`active`);
 
         });
 

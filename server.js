@@ -25,7 +25,11 @@ app.get(`/api/notes`, function(req, res){
     return res.json(notes);
 });
 
-app.get(`/api/notes/:index`, function(req, res){
+// -------------------------------------------------------------------
+// Changing active note item
+// -------------------------------------------------------------------
+
+app.get(`/api/notes/get/:index`, function(req, res){
     const myIndex = req.params.index;
     return res.json(notes[myIndex]);
 });

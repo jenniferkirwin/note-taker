@@ -28,23 +28,23 @@ $( document ).ready(function() {
 // Delete note
 // -------------------------------------------------------------------
 
-    $(document).on(`click`, $deleteBtn, function() {
+    $(document).on(`click`, $deleteBtn, function(event) {
 
-        const deleteIndex = {
-            index: $(this).parent().attr(`data-index`)
-        }
+        event.stopPropagation();
 
-        $.delete(`/api/notes/delete`, deleteIndex)
-        .then(
-            myRender()
-        )
+        const deleteIndex = $(this).parent().attr(`data-index`);
 
-        var deleteNote = function(id) {
+        const deleteNote = function(index) {
             return $.ajax({
-              url: "api/notes/" + id,
-              method: "DELETE"
+              url: `api/notes/delete/${index}`,
+              method: `DELETE`
             });
           };
+
+        deleteNote(deleteIndex)
+        .then(
+            myRender()
+        );
 
     });
 

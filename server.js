@@ -56,18 +56,11 @@ app.post(`/api/notes/save`, function(req, res) {
 // Deleting data from "notes"
 // -------------------------------------------------------------------
 
-app.delete(`/api/notes/delete`, function(req, res) {
-    const deleteIndex = parseInt(req.body.index);
+app.delete(`/api/notes/delete/:index`, function(req, res) {
+    const deleteIndex = parseInt(req.params.index);
 
-    console.log(deleteIndex);
+    notes.splice(deleteIndex, 1);
 
-    console.log(notes);
-
-    delete notes[deleteIndex];
-
-    console.log(notes);
-
-    // console.log(deleteIndex);
     return res.end();
 })
 

@@ -1,7 +1,9 @@
 $( document ).ready(function() { 
 
-    const $sidenav = $(`.sidenav`);
+    // Buttons
+
     const $saveBtn = $(`.saveBtn`);
+    const $newBtn = $(`.newBtn`);
     const $deleteBtn = `.deleteBtn`;
     const $favBtn = $(`.favBtn`);
 
@@ -15,14 +17,30 @@ $( document ).ready(function() {
             title: $(`.note-title`).html(),
             content: $(`.note-content`).html(),
             favorite: false,
-            dataIndex: $noteDiv.attr(`data-index`)            
+            dataIndex: $noteDiv.attr(`data-active`)            
         };
 
         $.post(`/api/notes/save`, newNote)
-        .then(
-            myRender()
-        );
+        .then( (data) => {
+            if (data) {
+                $noteDiv.attr(`data-active`, data);
+            }
+            
+            myRender();
+        });
     });
+
+// -------------------------------------------------------------------
+// New note
+// -------------------------------------------------------------------
+
+$newBtn.on(`click`, () => {
+
+    $noteTitle.empty();
+    $noteContent.empty();
+    $noteDiv.attr(`data-active`, `null`);
+
+});
 
 // -------------------------------------------------------------------
 // Delete note
@@ -54,6 +72,7 @@ $( document ).ready(function() {
 
     $(document).on(`click`, `.menu-item`, function() {
 
+        const $sidenavLi = $(`.sidenav li`);
         const $activeLi = $(this).parent();
         const activeIndex =  $(this).attr(`data-index`);
 
@@ -64,7 +83,7 @@ $( document ).ready(function() {
         })
         .then( () => {
 
-            $(`.sidenav li`).removeClass(`active`);
+            $sidenavLi.removeClass(`active`);
             $activeLi.addClass(`active`);
 
         });

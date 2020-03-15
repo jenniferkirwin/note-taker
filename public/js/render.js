@@ -1,8 +1,18 @@
+// -------------------------------------------------------------------
+// Main Variables
+// -------------------------------------------------------------------
+
+// Navigation for displaying notes
 const $favoriteNotes = $(`.favorite-notes`);
 const $allNotes = $(`.all-notes`);
+const $sidenavLi = $(`.sidenav li`);
+
+// Note Content
 const $noteTitle = $(`.note-title`);
 const $noteContent = $(`.note-content`);
 const $noteDiv = $(`.note-div`);
+
+const activeItem = null;
 
 // -------------------------------------------------------------------
 // Rendering the Side Navigation
@@ -10,39 +20,18 @@ const $noteDiv = $(`.note-div`);
 
 function myRender() {
     $.get(`/api/notes`, function(data) {
-        $favoriteNotes.empty();
+
         $allNotes.empty();
         
         data.forEach( (item, index)=> {
-            let favorite = item.favorite;
-            let starState;
-
-            // checking to see what the star icon should be
-
-            if (favorite === true) {
-                starState = `star`;
-            }
-            else {
-                starState = `star_outline`;
-            }
 
             // setting the HTML to append
 
-            let lineItem = `<li><a href="#!" class="waves-effect menu-item" data-index="${index}"><i class="material-icons right favBtn">${starState}</i><i class="material-icons right deleteBtn">delete_forever</i>${item.title}</a></li>`;
+            let lineItem = `<li><a href="#!" class="waves-effect menu-item" data-index="${index}"><i class="material-icons right deleteBtn">delete_forever</i>${item.title}</a></li>`;
 
             // appending the HTML
 
-            if (item.favorite === true) {
-                $favoriteNotes.append(
-                    lineItem
-                )               
-            }
-
-            else {
-                $allNotes.append(
-                    lineItem
-                );               
-            }
+            $allNotes.append(lineItem);
 
         });
     });
@@ -56,28 +45,103 @@ function myRender() {
 
 const displayNote = ({title, content}, myIndex) => {
 
-    $noteDiv.attr(`data-index`, myIndex);
+    $noteDiv.attr(`data-active`, myIndex);
     $noteTitle.html(title);
     $noteContent.html(content);
+    $sidenavLi.removeClass(`active`);
+    $(`[data-index="${myIndex}"]`).addClass(`active`);
 
 }
-
-// displaying a note when page renders
-
-// function activeNote() {
-//     $.get(`/api/notes`, function(data) {    
-
-//         if (data.length > 0) {
-
-//             displayNote(data, 0);
-
-//         };
-
-//     });
-// }
 
 $( document ).ready(function() { 
 
     myRender();
+
+});
+
+$( document ).ready(function() { 
+
+    // Buttons
+
+    const $saveBtn = $(`.saveBtn`);
+    const $newBtn = $(`.newBtn`);
+    const $deleteBtn = `.deleteBtn`;
+    const $favBtn = $(`.favBtn`);
+
+// -------------------------------------------------------------------
+// Save note
+// -------------------------------------------------------------------
+
+    $saveBtn.on(`click`, () => {
+
+        const newNote = {
+            title: $(`.note-title`).html(),
+            content: $(`.note-content`).html(),
+            favorite: false,
+            dataIndex: $noteDiv.attr(`data-active`)            
+        };
+
+        $.post(`/api/notes/save`, newNote)
+        .then( (data) => {
+            if (data) {
+                $noteDiv.attr(`data-active`, data);
+            }
+            
+            myRender();
+
+        });
+    });
+
+// -------------------------------------------------------------------
+// New note
+// -------------------------------------------------------------------
+
+$newBtn.on(`click`, () => {
+
+    $noteTitle.empty();
+    $noteContent.empty();
+    $noteDiv.attr(`data-active`, `null`);
+
+});
+
+// -------------------------------------------------------------------
+// Delete note
+// -------------------------------------------------------------------
+
+    $(document).on(`click`, $deleteBtn, function(event) {
+
+        event.stopPropagation();
+
+        const deleteIndex = $(this).parent().attr(`data-index`);
+
+        const deleteNote = function(index) {
+            return $.ajax({
+              url: `api/notes/delete/${index}`,
+              method: `DELETE`
+            });
+          };
+
+        deleteNote(deleteIndex)
+        .then(
+            myRender()
+        );
+
+    });
+
+// -------------------------------------------------------------------
+// Change active note displayed
+// -------------------------------------------------------------------
+
+    $(document).on(`click`, `.menu-item`, function() {
+
+        const activeIndex =  $(this).attr(`data-index`);
+
+        $.get(`/api/notes/get/${activeIndex}`, function(data) {    
+
+            displayNote(data, activeIndex);
+
+        });
+
+    });
 
 });

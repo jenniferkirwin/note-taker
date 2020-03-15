@@ -12,7 +12,7 @@ const notes = [
     {
         title: "My Third Note",
         content: "Lots of lovely text",
-        favorite: true
+        favorite: false
     }
 ];
 

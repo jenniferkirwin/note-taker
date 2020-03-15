@@ -44,15 +44,14 @@ app.post(`/api/notes/save`, function(req, res) {
 
     if (dataIndex === `null`) {
         notes.push({title, content, favorite});
+        const newIndex = notes.length - 1;
+        return res.send(newIndex.toString());
     }
 
     else {
         notes[dataIndex] = {title, content, favorite};
+        return res.end();
     }
-    
-
-    // return res.json(notes);
-    return res.end();
     
 });
 

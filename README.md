@@ -6,7 +6,7 @@ This application runs in node.js using Express and is deployed on Heroku.
 
 Visit [Heroku Link](www.google.com) to see the deployed application.
 
-![Image of Application]()
+![Image of Application](https://github.com/jenniferkirwin/note-taker/blob/master/note-taker-app.png?raw=true)
 
 ## Built With
 

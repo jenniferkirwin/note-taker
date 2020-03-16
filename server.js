@@ -14,18 +14,6 @@ app.use(express.json());
 const notes = require(`./db/notes`);
 
 // -------------------------------------------------------------------
-// Routes
-// -------------------------------------------------------------------
-
-app.get(`/`, function(req, res){
-    res.sendFile(path.join(__dirname, `../public/index.html`));
-});
-
-app.get(`/api/notes`, function(req, res){
-    return res.json(notes);
-});
-
-// -------------------------------------------------------------------
 // Changing active note item
 // -------------------------------------------------------------------
 
@@ -66,6 +54,23 @@ app.delete(`/api/notes/delete/:index`, function(req, res) {
 
     return res.end();
 })
+
+// -------------------------------------------------------------------
+// Routes
+// -------------------------------------------------------------------
+app.get(`/api/notes`, function(req, res){
+    return res.json(notes);
+});
+
+app.get(`/`, function(req, res){
+    res.sendFile(path.join(__dirname, `public/index.html`));
+});
+
+app.get(`/*`, function(req, res){
+    res.sendFile(path.join(__dirname, `public/note.html`));
+});
+
+
 
 // -------------------------------------------------------------------
 // Starting the Server

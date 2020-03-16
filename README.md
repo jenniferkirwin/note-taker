@@ -4,7 +4,7 @@ A note taking application utilizing node.js, sass, and more...
 ## Getting Started
 This application runs in node.js using Express and is deployed on Heroku.
 
-Visit [Heroku Link](www.google.com) to see the deployed application.
+Visit [https://immense-beyond-55172.herokuapp.com/](https://immense-beyond-55172.herokuapp.com/) to see the deployed application.
 
 ![Image of Application](https://github.com/jenniferkirwin/note-taker/blob/master/note-taker-app.png?raw=true)
 

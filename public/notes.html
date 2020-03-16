@@ -40,10 +40,12 @@
       </div>
       <div class="row">
         <div class="col s12">
-          <a class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Go to Note Taker</a>
+          <div class="note-div" data-active="null">
+            <h2 contenteditable="true" class="note-title" data-placeholder="New Note Title"></h2>
+            <p contenteditable="true" class="note-content" data-placeholder="New Note Content"></p>
+          </div>
         </div>
-      </div>
- 
+      </div>  
     </main>
     <!-- ------------------------------------------------------------- -->
     <!-- Footer -->
@@ -51,7 +53,10 @@
     <footer class="page-footer">
 
         <div class="row">
-          <div class="col s12"></div>
+          <div class="col s12">
+            <a class="waves-effect waves-light btn saveBtn"><i class="material-icons left">save</i>Save</a>
+            <a class="waves-effect waves-light btn newBtn"><i class="material-icons left">add</i>New Note</a>
+          </div>
       </div>
     </footer>
 

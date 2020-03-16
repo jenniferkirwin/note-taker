@@ -7,7 +7,7 @@ const notes = [
     {
         title: "My Second Note",
         content: "Lots of lovely text",
-        favorite: true
+        favorite: false
     },
     {
         title: "My Third Note",

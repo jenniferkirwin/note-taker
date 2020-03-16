@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Bitter:400,700|Hind|Source+Serif+Pro&display=swap");
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  font-family: "Source Serif Pro", serif;
+  font-size: 16px;
 }
 
 main {
@@ -18,8 +21,37 @@ header, main, footer {
   }
 }
 .my-nav {
-  background-color: red;
+  background-color: #DD5C11;
   padding: 15px 5px;
+  font-family: "Bitter", serif;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.my-nav i {
+  margin-right: 7px;
+}
+
+.btn {
+  font-weight: bold;
+  font-family: "Bitter", serif;
+}
+
+footer, .page-footer {
+  border-top: 1px solid #b3b3b3;
+  background-color: #ffffff;
+}
+
+[contenteditable=true]:empty:before {
+  content: attr(data-placeholder);
+  pointer-events: none;
+  display: block;
+  /* For Firefox */
+}
+
+[contenteditable]:focus {
+  background: #efefef;
+  outline: 2px solid #e6e6e6;
 }
 
 /*# sourceMappingURL=style.css.map */

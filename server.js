@@ -17,26 +17,55 @@ const notes = require(`./db/notes`);
 // Routes
 // -------------------------------------------------------------------
 
-app.get(`/`, function(reg, res){
+app.get(`/`, function(req, res){
     res.sendFile(path.join(__dirname, `../public/index.html`));
 });
 
-app.get(`/api/notes`, function(reg, res){
+app.get(`/api/notes`, function(req, res){
     return res.json(notes);
+});
+
+// -------------------------------------------------------------------
+// Changing active note item
+// -------------------------------------------------------------------
+
+app.get(`/api/notes/get/:index`, function(req, res){
+    const myIndex = req.params.index;
+    return res.json(notes[myIndex]);
 });
 
 // -------------------------------------------------------------------
 // Getting data from "save"
 // -------------------------------------------------------------------
 
-app.post(`/api/notes`, function(req, res) {
+app.post(`/api/notes/save`, function(req, res) {
 
-    const newNote = req.body;
-    notes.push(newNote);
+    const {title, content, favorite, dataIndex} = req.body;
 
-    return res.json(notes);
+    if (dataIndex === `null`) {
+        notes.push({title, content, favorite});
+        const newIndex = notes.length - 1;
+        return res.send(newIndex.toString());
+    }
+
+    else {
+        notes[dataIndex] = {title, content, favorite};
+        return res.end();
+    }
     
 });
+
+// -------------------------------------------------------------------
+// Deleting data from "notes"
+// -------------------------------------------------------------------
+
+app.delete(`/api/notes/delete/:index`, function(req, res) {
+    const deleteIndex = parseInt(req.params.index);
+
+    notes.splice(deleteIndex, 1);
+
+    return res.end();
+})
 
 // -------------------------------------------------------------------
 // Starting the Server

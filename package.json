@@ -1,15 +1,25 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "A simple note taking app",
+  "description": "A simple note taking application",
   "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenniferkirwin/note-taker.git"
+  },
   "author": "Jennifer Kirwin",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.16.4"
-  }
+  "bugs": {
+    "url": "https://github.com/jenniferkirwin/note-taker/issues"
+  },
+  "homepage": "https://github.com/jenniferkirwin/note-taker#readme"
 }
